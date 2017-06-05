@@ -1,5 +1,7 @@
 package com.architecturecomponents.ui;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,16 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.architecturecomponents.App;
 import com.architecturecomponents.BaseActivity;
 import com.architecturecomponents.R;
-import com.architecturecomponents.repositories.ComicRepository;
 
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
-    @Inject ComicRepository comicRepository;
+    @Inject ViewModelProvider.Factory viewModelFactory;
+    private TextView test;
+    private ComicsViewModel comicViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,18 @@ public class MainActivity extends BaseActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
+            }
+        });
+
+        test = (TextView) findViewById(R.id.test);
+
+        comicViewModel = ViewModelProviders.of(this, viewModelFactory).get(ComicsViewModel.class);
+        comicViewModel.init();
+        comicViewModel.getComics().observe(this, comics -> {
+            if (comics == null) {
+                test.setText("error");
+            } else {
+                test.setText(String.format("%s", comics.size()));
             }
         });
     }

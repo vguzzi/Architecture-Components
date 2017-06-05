@@ -1,6 +1,7 @@
 package com.architecturecomponents.dagger.module;
 
 import com.architecturecomponents.network.MarvelWebService;
+import com.architecturecomponents.network.StaticKeys;
 import com.architecturecomponents.repositories.ComicRepository;
 
 import javax.inject.Singleton;
@@ -16,7 +17,7 @@ import dagger.Provides;
 public class ComicRepositoryModule {
     @Provides
     @Singleton
-    ComicRepository provideComicRepository(MarvelWebService marvelWebService) {
-        return new ComicRepository(marvelWebService);
+    ComicRepository provideComicRepository(MarvelWebService marvelWebService, StaticKeys staticKeys) {
+        return new ComicRepository(marvelWebService, staticKeys);
     }
 }

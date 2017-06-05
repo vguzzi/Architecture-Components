@@ -3,6 +3,7 @@ package com.architecturecomponents.dagger.module;
 import android.app.Application;
 
 import com.architecturecomponents.network.MarvelWebService;
+import com.architecturecomponents.network.StaticKeys;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -62,5 +63,10 @@ public class MarvelNetModule {
     @Singleton
     MarvelWebService provideMarvelWebService(Retrofit retrofit) {
         return retrofit.create(MarvelWebService.class);
+    }
+
+    @Provides
+    @Singleton StaticKeys provideStaticKeys() {
+        return new StaticKeys();
     }
 }
