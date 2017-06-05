@@ -11,7 +11,7 @@ import dagger.Provides;
  * Provides Context to other Modules
  */
 
-@Module
+@Module(includes = ViewModelModule.class)
 public class AppModule {
     Application application;
 
